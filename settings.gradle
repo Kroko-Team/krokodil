@@ -1,0 +1,2 @@
+rootProject.name='Kroko'
+include ':app'
