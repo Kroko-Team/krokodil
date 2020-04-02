@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "140504181475",
+    "firebase_url": "https://kroko-proj.firebaseio.com",
+    "project_id": "kroko-proj",
+    "storage_bucket": "kroko-proj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140504181475:android:8e61bf4017414d4e2473d6",
+        "android_client_info": {
+          "package_name": "com.krokoteam.kroko"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140504181475-ag94hnqq4252kvba5ht27c0765i0nbsn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6OX7yd4CX0yNcHU6rcDb0g7y325Kw7GM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140504181475-ag94hnqq4252kvba5ht27c0765i0nbsn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
