@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.krokoteam.kroko.R;
-import com.krokoteam.kroko.viewmodel.HomeScreenViewModel;
 
-public class MainActivity extends AppCompatActivity implements HomeScreenViewModel.OpenProfileFragmentRouter, HomeScreenViewModel.OpenCreateLobbyFragmentRouter {
+public class MainActivity extends AppCompatActivity implements OpenProfileFragmentRouter, OpenCreateLobbyFragmentRouter {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,4 +35,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenViewMod
                 .addToBackStack(null)
                 .commit();
     }
+
+
+
 }

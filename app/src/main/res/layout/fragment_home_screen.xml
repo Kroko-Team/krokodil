@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data class="HomeScreenBinding">
 
         <variable
             name="onProfileClick"
-            type="com.krokoteam.kroko.view.OnFragmentIconClickListener"/>
+            type="com.krokoteam.kroko.view.OnFragmentIconClickListener" />
 
+        <variable
+            name="viewModel"
+            type="com.krokoteam.kroko.viewmodel.HomeScreenViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -25,10 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPurple"
-                app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
                 app:contentScrim="@color/colorPurpleDark"
-                app:expandedTitleGravity="end|bottom"
-                app:expandedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                app:layout_scrollFlags="exitUntilCollapsed|scroll"
                 app:statusBarScrim="@color/colorAccent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,7 +79,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:backgroundTint="@color/colorGreen"
-                        android:text="ДАТЬ В ЖОПУ"
+                        android:text="@string/find_opponents"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -90,10 +91,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="8dp"
                         android:backgroundTint="@color/colorRed"
-                        android:text="Дать в рот по ссылке"
+                        android:text="@string/join_by_link"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -113,61 +113,18 @@
             android:background="@color/colorWhite"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="4dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="4dp"
-                    android:background="@color/colorGrayTit" />
-
-                <TextView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+                    android:layout_height="match_parent"
+                    bind:data="@{viewModel.lobbyList}" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:gravity="center"
-                    android:text="3"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:gravity="center"
-                    android:text="4"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:gravity="center"
-                    android:text="5"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/colorRed"
-                    android:gravity="center"
-                    android:text="6"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -186,19 +143,19 @@
 
             <ImageView
                 android:id="@+id/user_profile_home_screen_image_view"
-                android:tag="userProfileIcon"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="@{(view) -> onProfileClick.onFragmentIconClick(view)}"
                 android:src="@drawable/ic_profile"
+                android:tag="userProfileIcon"
                 android:tint="@color/colorGrayTit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/homeIcon"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{(view) -> onProfileClick.onProfileClick(view)}"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/homeIcon"
@@ -217,16 +174,33 @@
                 android:id="@+id/horse_icon_home_screen_image_view"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="match_parent"
+                android:onClick="@{(view) -> onProfileClick.onFragmentIconClick(view)}"
                 android:src="@drawable/ic_horse"
                 android:tint="@color/colorGrayTit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/homeIcon"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{(view) -> onProfileClick.onProfileClick(view)}"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/linearLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:background="@color/colorWhite"-->
+    <!--android:orientation="vertical"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent">-->
+
+    <!--<View-->
+    <!--    android:layout_width="40dp"-->
+    <!--    android:layout_height="4dp"-->
+    <!--    android:layout_gravity="center"-->
+    <!--    android:layout_margin="8dp"-->
+    <!--    android:background="@color/colorGrayTit" />-->
+    <!--</LinearLayout>-->

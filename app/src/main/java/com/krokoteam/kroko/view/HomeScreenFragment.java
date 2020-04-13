@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.krokoteam.kroko.databinding.HomeScreenBinding;
 import com.krokoteam.kroko.utils.BitmapUtils;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.krokoteam.kroko.R;
 import com.krokoteam.kroko.viewmodel.HomeScreenViewModel;
 
@@ -26,11 +26,14 @@ import com.krokoteam.kroko.viewmodel.HomeScreenViewModel;
 public class HomeScreenFragment extends Fragment {
 
     private BitmapUtils mBitmapUtils = new BitmapUtils();
-    private HomeScreenViewModel.OpenProfileFragmentRouter mOpenProfileFragmentRouter;
-    private HomeScreenViewModel.OpenCreateLobbyFragmentRouter mOpenCreateLobbyFragmentRouter;
+    private OpenProfileFragmentRouter mOpenProfileFragmentRouter;
+    private OpenCreateLobbyFragmentRouter mOpenCreateLobbyFragmentRouter;
+    private HomeScreenViewModel mHomeScreenViewModel;
+    private String TAG = getClass().getName();
+
     private final OnFragmentIconClickListener mOnFragmentIconClickListener = new OnFragmentIconClickListener() {
         @Override
-        public void onProfileClick(View v) {
+        public void onFragmentIconClick(View v) {
             switch (v.getId()) {
                 case R.id.user_profile_home_screen_image_view:
                     mOpenProfileFragmentRouter.openProfileFragment();
@@ -48,6 +51,14 @@ public class HomeScreenFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mOpenProfileFragmentRouter = (OpenProfileFragmentRouter) context;
+        mOpenCreateLobbyFragmentRouter = (OpenCreateLobbyFragmentRouter) context;
+        mHomeScreenViewModel = new HomeScreenViewModel();
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -55,18 +66,15 @@ public class HomeScreenFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        HomeScreenBinding binding =  HomeScreenBinding.inflate(inflater, container, false);
+        HomeScreenBinding binding = HomeScreenBinding.inflate(inflater, container, false);
         binding.setOnProfileClick(mOnFragmentIconClickListener);
+        binding.setViewModel(mHomeScreenViewModel);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) view
-                .findViewById(R.id.collapsing_toolbar_layout)
-                .getLayoutParams();
-        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
 
         ImageView mProfileImageHomeScreen = view.findViewById(R.id.profile_image_home_screen_image_view);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.igor);
@@ -76,10 +84,8 @@ public class HomeScreenFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mOpenProfileFragmentRouter = (HomeScreenViewModel.OpenProfileFragmentRouter) context;
-        mOpenCreateLobbyFragmentRouter = (HomeScreenViewModel.OpenCreateLobbyFragmentRouter) context;
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mHomeScreenViewModel.getLobbiesFromLobbyDatabase();
     }
-
 }
