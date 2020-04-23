@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Kroko</string>
+    <string name="auth_login">Логин</string>
+    <string name="auth_password">Пароль</string>
+    <string name="auth_sign_in">Войти</string>
+    <string name="auth_sign_in_google">Войти с Google</string>
+    <string name="auth_sign_in_vk">Войти с Vk</string>
 </resources>
