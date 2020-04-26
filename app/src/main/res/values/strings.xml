@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Kroko</string>
+
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+    <string name="desc_kroko_lockup">Firebase logo and name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
 </resources>
