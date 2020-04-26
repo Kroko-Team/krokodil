@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Kroko</string>
-    <string name="auth_login">Логин</string>
-    <string name="auth_password">Пароль</string>
-    <string name="auth_sign_in">Войти</string>
-    <string name="auth_sign_in_google">Войти с Google</string>
-    <string name="auth_sign_in_vk">Войти с Vk</string>
+
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+    <string name="desc_kroko_lockup">Firebase logo and name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
 </resources>
