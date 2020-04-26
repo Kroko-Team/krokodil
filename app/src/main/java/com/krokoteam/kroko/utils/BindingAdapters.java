@@ -6,36 +6,38 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.krokoteam.kroko.data.model.Lobby;
+import com.krokoteam.kroko.view.LobbyAdapter;
 import com.squareup.picasso.Target;
+
+import java.util.List;
 
 /**
  * Created by Syelkonya on 13.04.2020.
  */
 public class BindingAdapters {
 
-    private static Bitmap mBitmap;
-    private  static BitmapUtils mBitmapUtils = new BitmapUtils();
 
     @BindingAdapter("bind:imageUrl")
     public static void loadImage(ImageView imageView, String imageUrl) {
-        Picasso.get().load(imageUrl).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                mBitmapUtils.cropImage(bitmap);
-                mBitmapUtils.createRoundedBitmapDrawableWithBorder(bitmap, Resources.getSystem());
-                imageView.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {}
-        });
 
 
+        Glide.with(imageView)
+                .load(imageUrl)
+                .apply(RequestOptions.circleCropTransform())
+                .into(imageView);
+    }
+
+
+    @BindingAdapter({"bind:data"})
+    public static void configureRecyclerView(RecyclerView recyclerView, List<Lobby> lobbyList) {
+        LobbyAdapter lobbyAdapter = new LobbyAdapter(lobbyList, recyclerView.getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(lobbyAdapter);
     }
 }

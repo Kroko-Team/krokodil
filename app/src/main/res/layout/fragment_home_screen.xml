@@ -16,7 +16,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -109,10 +110,9 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorWhite"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,11 +120,9 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler"
+                    android:id="@+id/recycler_view_for_lobby"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    bind:data="@{viewModel.lobbyList}" />
-
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:layout_width="match_parent"

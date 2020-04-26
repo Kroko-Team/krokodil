@@ -10,12 +10,15 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.krokoteam.kroko.R;
 
+
 /**
  * Created by Syelkonya on 04.04.2020.
  */
-public class BitmapUtils {
+public class BitmapUtils{
 
-    public Bitmap cropImage(Bitmap bitmap){
+
+
+    private Bitmap cropImage(Bitmap bitmap){
         int width  = bitmap.getWidth();
         int height = bitmap.getHeight();
         int newWidth = Math.min(height, width);
@@ -27,7 +30,11 @@ public class BitmapUtils {
         return Bitmap.createBitmap(bitmap, cropW, cropH, newWidth, newHeight);
     }
 
+
     public RoundedBitmapDrawable createRoundedBitmapDrawableWithBorder(Bitmap bitmap, Resources resources){
+
+       bitmap = cropImage(bitmap);
+
         final int BORDER_WIDTH_HALF = 24;
         int bitmapDiameter = bitmap.getWidth();
         int bitmapRadius = bitmapDiameter/2;
@@ -56,4 +63,5 @@ public class BitmapUtils {
 
         return roundedBitmapDrawable;
     }
+
 }

@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class ProfileSettingsFragment extends Fragment {
 
-    private LobbyDatabase mLobbyDatabase = new LobbyDatabase();
+    private LobbyDatabase mLobbyDatabase = LobbyDatabase.getInstance();
     private FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
     private ProfileSettingsViewModel mProfileSettingsViewModel = new ProfileSettingsViewModel();
     private ArrayList<Lobby> mLobbyList = new ArrayList<>();
@@ -58,9 +58,6 @@ public class ProfileSettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tv = view.findViewById(R.id.text_view_profile_fragment);
-
-
-
 
 
     }

@@ -1,11 +1,15 @@
 package com.krokoteam.kroko.view;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import com.krokoteam.kroko.R;
 import com.krokoteam.kroko.data.model.Lobby;
 import com.krokoteam.kroko.databinding.LobbyListBinding;
 
@@ -19,22 +23,28 @@ public class LobbyAdapter extends RecyclerView.Adapter<LobbyHolder> {
 
 
     private final List<Lobby> mLobbyList;
+    private Context mContext;
 
-    public LobbyAdapter(List<Lobby> lobbyList){
+    public LobbyAdapter(List<Lobby> lobbyList, Context context){
         mLobbyList = lobbyList;
+        mContext = context;
     }
 
     @NonNull
     @Override
     public LobbyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        LobbyListBinding binding = LobbyListBinding.inflate(inflater, parent, false);
+
+        LobbyListBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(mContext),
+                R.layout.lobby_list_item, parent, false);
+
         return new LobbyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LobbyHolder holder, int position) {
         Lobby lobby = mLobbyList.get(position);
+
         holder.bind(lobby);
     }
 

@@ -26,8 +26,15 @@ import java.util.List;
  */
 public class LobbyDatabase {
 
+    private static final LobbyDatabase INSTANCE = new LobbyDatabase();
+
+    private LobbyDatabase(){}
+
+    public static LobbyDatabase getInstance(){
+        return INSTANCE;
+    }
+
     private static final String TAG = LobbyDatabase.class.getSimpleName();
-    private DocumentSnapshot mLastQueriedDocument;
     private FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
     private ArrayList<Lobby> mLobbyList = new ArrayList<>();
 

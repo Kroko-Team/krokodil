@@ -1,5 +1,7 @@
 package com.krokoteam.kroko.data.model;
 
+import androidx.databinding.Bindable;
+
 /**
  * Created by Syelkonya on 09.04.2020.
  */
@@ -11,11 +13,14 @@ public class Lobby  {
     private int mParticipantsQuantity;
     private String mGameLink;
 
-    public Lobby(String name,String imageUrl, String gameLink) {
+    public Lobby(String imageUrl, String name, String participantsName, int participantsQuantity, String gameLink) {
         mImageUrl = imageUrl;
         mName = name;
+        mParticipantsName = participantsName;
+        mParticipantsQuantity = participantsQuantity;
         mGameLink = gameLink;
     }
+
 
     public Lobby() {}
 
@@ -45,6 +50,10 @@ public class Lobby  {
 
     public int getParticipantsQuantity() {
         return mParticipantsQuantity;
+    }
+
+    public String getParticipantsQuantityString() {
+        return String.valueOf(mParticipantsQuantity);
     }
 
     public void setParticipantsQuantity(int participantsQuantity) {
