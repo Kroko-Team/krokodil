@@ -20,6 +20,7 @@ import com.krokoteam.kroko.view.ProfileSettingsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Syelkonya on 09.04.2020.
@@ -46,7 +47,7 @@ public class LobbyDatabase {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 Lobby lobby = document.toObject(Lobby.class);
                                 mLobbyList.add(lobby);

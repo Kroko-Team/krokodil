@@ -21,16 +21,16 @@ public class BitmapUtils{
     private Bitmap cropImage(Bitmap bitmap){
         int width  = bitmap.getWidth();
         int height = bitmap.getHeight();
-        int newWidth = Math.min(height, width);
-        int newHeight = (height > width)? height - ( height - width) : height;
+        int newSideSize = Math.min(height, width);
         int cropW = (width - height) / 2;
         cropW = Math.max(cropW, 0);
         int cropH = (height - width) / 2;
         cropH = Math.max(cropH, 0);
-        return Bitmap.createBitmap(bitmap, cropW, cropH, newWidth, newHeight);
+        return Bitmap.createBitmap(bitmap, cropW, cropH, newSideSize, newSideSize);
     }
 
 
+    @SuppressWarnings("SuspiciousNameCombination")
     public RoundedBitmapDrawable createRoundedBitmapDrawableWithBorder(Bitmap bitmap, Resources resources){
 
        bitmap = cropImage(bitmap);

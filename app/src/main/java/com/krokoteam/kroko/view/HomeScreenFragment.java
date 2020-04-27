@@ -42,7 +42,6 @@ public class HomeScreenFragment extends Fragment {
     private OpenCreateLobbyFragmentRouter mOpenCreateLobbyFragmentRouter;
     private HomeScreenBinding mHomeScreenBinding;
     private HomeScreenViewModel mHomeScreenViewModel;
-    private String TAG = getClass().getName();
     private LobbyDatabase mLobbyDatabase = LobbyDatabase.getInstance();
     private LobbyAdapter mLobbyAdapter;
 
@@ -88,20 +87,6 @@ public class HomeScreenFragment extends Fragment {
 //                mLobbyAdapter = new LobbyAdapter(list, getContext());
 //            }
 //        });
-
-
-//
-//        List<Lobby> list = new ArrayList<>();
-//        Lobby lobby123 = new Lobby();
-//        lobby123.setImageUrl("https://firebasestorage.googleapis.com/v0/b/kroko-proj.appspot.com/o/images%2Fmitsubishi-lancer-evolution-9-2028.jpg?alt=media&token=4687782a-6fff-4141-913e-9150816efc1b");
-//        lobby123.setName("gameLikkers");
-//        lobby123.setParticipantsName("Ваня, Коля, Вася");
-//        lobby123.setParticipantsQuantity(3);
-//        lobby123.setGameLink("123");
-//        list.add(lobby123);
-//
-//        mLobbyAdapter = new LobbyAdapter(list, getContext());
-
     }
 
     @Nullable
@@ -109,7 +94,7 @@ public class HomeScreenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mHomeScreenBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_screen, container, false);
-
+        mHomeScreenBinding.setOnProfileClick(mOnFragmentIconClickListener);
 
         RecyclerView recyclerViewForLobby = mHomeScreenBinding.recyclerViewForLobby;
         recyclerViewForLobby.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
@@ -117,21 +102,17 @@ public class HomeScreenFragment extends Fragment {
 
         List<Lobby> list = new ArrayList<>();
 
-        Lobby lobby123 = new Lobby();
-        lobby123.setImageUrl("https://firebasestorage.googleapis.com/v0/b/kroko-proj.appspot.com/o/images%2Fmitsubishi-lancer-evolution-9-2028.jpg?alt=media&token=4687782a-6fff-4141-913e-9150816efc1b");
-        lobby123.setName("gameLikkers");
-        lobby123.setParticipantsName("Ваня, Коля, Вася");
-        lobby123.setParticipantsQuantity(3);
-        lobby123.setGameLink("123");
-        list.add(lobby123);
-
+        Lobby lobby = new Lobby("https://firebasestorage.googleapis.com/v0/b/kroko-proj.appspot.com/o/images%2Fmitsubishi-lancer-evolution-9-2028.jpg?alt=media&token=4687782a-6fff-4141-913e-9150816efc1b",
+                "gameLikkers",
+                "Ваня, Коля, Вася",
+                3,
+                "123");
+        list.add(lobby);
 
         mLobbyAdapter = new LobbyAdapter(list, getContext());
-
         recyclerViewForLobby.setAdapter(mLobbyAdapter);
 
         return mHomeScreenBinding.getRoot();
-
     }
 
     @Override
@@ -141,12 +122,6 @@ public class HomeScreenFragment extends Fragment {
         ImageView mProfileImageHomeScreen = view.findViewById(R.id.profile_image_home_screen_image_view);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.igor);
         mProfileImageHomeScreen.setImageDrawable(mBitmapUtils.createRoundedBitmapDrawableWithBorder(bitmap, getResources()));
-
-
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
 }

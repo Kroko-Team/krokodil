@@ -44,7 +44,6 @@ public class LobbyAdapter extends RecyclerView.Adapter<LobbyHolder> {
     @Override
     public void onBindViewHolder(@NonNull LobbyHolder holder, int position) {
         Lobby lobby = mLobbyList.get(position);
-
         holder.bind(lobby);
     }
 
