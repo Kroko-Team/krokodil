@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="LobbyListBinding">
+
+        <variable
+            name="lobby"
+            type="com.krokoteam.kroko.data.model.Lobby" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        tools:context="com.krokoteam.kroko.view.MainActivity">
+
+
+        <ImageView
+            android:id="@+id/lobby_image_recycler_view"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="@{lobby.imageUrl}"/>
+
+        <TextView
+            android:id="@+id/lobby_name_text_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorBlack"
+            android:text="@{lobby.name}"
+            app:layout_constraintStart_toEndOf="@+id/lobby_image_recycler_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Lobby Name" />
+
+        <TextView
+            android:id="@+id/lobby_participants_text_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/colorGrayTit"
+            android:textSize="12sp"
+            android:text="@{lobby.participantsName}"
+            app:layout_constraintStart_toStartOf="@+id/lobby_name_text_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/lobby_name_text_recycler_view"
+            tools:text="Ivan, Marina, Loh" />
+
+        <Button
+            android:id="@+id/enter_lobby_button_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/colorPurple"
+            android:text="@string/enter_lobby"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/quantity_of_participants_image_recycler_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/quantity_of_participants_image_recycler_view"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_participants_quantity"
+            android:tint="@color/colorBlack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/quantity_of_participants_text_recycler_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/quantity_of_participants_text_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textSize="32sp"
+            android:text="@{lobby.participantsQuantityString}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/colorBlack"
+            tools:text="3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
