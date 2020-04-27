@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.GameActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/stream_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/background_dark"/>
+
+        <FrameLayout
+            android:id="@+id/stream_layout_self"
+            android:layout_width="160dp"
+            android:layout_height="200dp"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/stream_control_buttons"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/holo_blue_bright" />
+
+        <LinearLayout
+            android:id="@+id/stream_control_buttons"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/become_broadcaster"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:text="Стать ведущим"/>
+            <Button
+                android:id="@+id/become_viewer"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:text="Стать зрителем"/>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

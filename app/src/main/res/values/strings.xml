@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Kroko</string>
+  
+    <string name="agora_app_id">58ac8d6313be490b9fb08fa70cce9f60</string>
+    <string name="test_channel_token">00658ac8d6313be490b9fb08fa70cce9f60IABmwXvFJ+3tltYP3CTiDFwvEtmvBQ0gRKPI2Ndyl8/hoo9auH4AAAAAEADwRtPADOSmXgEAAQAM5KZe</string>
+    
     <string name="find_opponents">искать соперников!</string>
     <string name="join_by_link">Присоединиться по ссылке</string>
-    <string name="enter_lobby">войти</string>
+    <string name="enter_lobby">войти</string>=======
 
     <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
     <string name="desc_kroko_lockup">Firebase logo and name</string>
