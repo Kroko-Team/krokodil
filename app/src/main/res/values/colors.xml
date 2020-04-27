@@ -10,4 +10,5 @@
     <color name="colorGreen">#2CC09C</color>
     <color name="colorBlack">#3D3D3D</color>
     <color name="colorGrayTit">#CCCCCC</color>
+    <color name="colorBackground">#FFFFFF</color>
 </resources>
