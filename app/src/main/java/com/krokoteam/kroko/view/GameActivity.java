@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -26,7 +27,7 @@ import android.widget.RelativeLayout;
 
 import com.krokoteam.kroko.R;
 
-public class GameActivity extends AppCompatActivity implements IStreamSupportable {
+public class GameActivity extends AppCompatActivity {
 
     private RtcEngine mRtcEngine;
 
@@ -86,7 +87,7 @@ public class GameActivity extends AppCompatActivity implements IStreamSupportabl
                 @Override
                 public void run() {
                     Log.d(LOG_TAG,"First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
-                    // setupRemoteVideo(uid);
+                    setupRemoteVideo(uid);
                 }
             });
         }

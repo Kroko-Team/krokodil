@@ -24,25 +24,23 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.krokoteam.kroko.R;
+import com.krokoteam.kroko.view.IStreamSupportable;
 
 
 public class VideoStreamService {
     private static VideoStreamService mInstance;
 
+    private IStreamSupportable mStreamView;
+
+    private RtcEngine mRtcEngine;
+    private IRtcEngineEventHandler mRtcEventHandler;
+
     public static VideoStreamService getInstance() {
         if (mInstance == null) {
             mInstance = new VideoStreamService();
+            return null;
         }
-        return mInstance;
-    }
-
-
-
-    private VideoStreamService() {
-
-    }
-
-    private void setupHost() {
-
+        else
+            return mInstance;
     }
 }
