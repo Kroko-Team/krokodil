@@ -131,6 +131,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         if (checkPermissions()) {
             setupAgoraStreamingService();
+            Log.d(LOG_TAG, "setup complete");
         } else {
             Log.d(LOG_TAG, "YOU HAVE NO PERMISSIONS");
         }
@@ -188,8 +189,8 @@ public class GameActivity extends AppCompatActivity {
     private void setupVideoConfig() {
         mRtcEngine.enableVideo();
         mRtcEngine.setVideoEncoderConfiguration(new VideoEncoderConfiguration(
-                VideoEncoderConfiguration.VD_1280x720,
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_30,
+                VideoEncoderConfiguration.VD_480x480,
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
                 VideoEncoderConfiguration.STANDARD_BITRATE,
                 VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT
         ));
@@ -222,6 +223,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void joinChannel() {
-        mRtcEngine.joinChannel(getResources().getString(R.string.test_channel_token), "test_channel", null, 0);
+        mRtcEngine.joinChannel(null, "test", null, 0);
     }
 }
