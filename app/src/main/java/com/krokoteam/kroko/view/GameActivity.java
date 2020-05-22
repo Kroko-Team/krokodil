@@ -1,17 +1,14 @@
 package com.krokoteam.kroko.view;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.util.Log;
-
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
@@ -24,98 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-
 import com.krokoteam.kroko.R;
 
-public class GameActivity extends AppCompatActivity {
-
-    private RtcEngine mRtcEngine;
-
-    private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
-        @Override
-        // Listen for the onJoinChannelSuccess callback.
-        // This callback occurs when the local user successfully joins the channel.
-        public void onJoinChannelSuccess(String channel, final int uid, int elapsed) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(LOG_TAG,"Join channel success, uid: " + (uid & 0xFFFFFFFFL));
-                }
-            });
-        }
-
-        @Override
-        public void onUserJoined(int uid, int elapsed) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(LOG_TAG,"User joined!: " + (uid & 0xFFFFFFFFL));
-                }
-            });
-        }
-
-        @Override
-        public void onFirstRemoteVideoFrame(final int uid, int width, int height, int elapsed) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(LOG_TAG,"First remote video frame, uid: " + (uid & 0xFFFFFFFFL));
-                    // setupRemoteVideo(uid);
-                }
-            });
-        }
-
-        @Override
-        // Listen for the onFirstRemoteVideoDecoded callback.
-        // This callback occurs when the first video frame of the broadcaster is received and decoded after the broadcaster successfully joins the channel.
-        // You can call the setupRemoteVideo method in this callback to set up the remote video view.
-        public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(LOG_TAG,"First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
-                    // setupRemoteVideo(uid);
-                }
-            });
-        }
-
-        @Override
-        public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
-            // super.onRemoteVideoStateChanged(uid, state, reason, elapsed);
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(LOG_TAG,"First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
-                    setupRemoteVideo(uid);
-                }
-            });
-        }
-
-        @Override
-        public void onRemoteVideoStats(RemoteVideoStats stats) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(LOG_TAG,"On remote video stats");
-                    setupRemoteVideo(stats.uid);
-                }
-            });
-        }
-
-        @Override
-        // Listen for the onUserOffline callback.
-        // This callback occurs when the broadcaster leaves the channel or drops offline.
-        public void onUserOffline(final int uid, int reason) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(LOG_TAG,"User offline, uid: " + (uid & 0xFFFFFFFFL));
-                    // onRemoteUserLeft();
-                }
-            });
-        }
-    };
+public class GameActivity extends StreamingBaseActivity implements IStreamEventsHandler {
 
     private static final String LOG_TAG = GameActivity.class.getSimpleName();
     private static final int PERMISSION_REQ_ID = 1;
@@ -129,12 +37,19 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        setupPlayerData();
         if (checkPermissions()) {
             setupAgoraStreamingService();
             Log.d(LOG_TAG, "setup complete");
         } else {
             Log.d(LOG_TAG, "YOU HAVE NO PERMISSIONS");
         }
+    }
+
+    // TODO: Взять данные из БД (ID канала, роль игрока и т.д.)
+    private void setupPlayerData() {
+        mUserID = 0;
+        mChannelName = "testChannelName3";
     }
 
     private boolean checkPermissions() {
@@ -161,68 +76,31 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupAgoraStreamingService() {
-        try {
-            mRtcEngine = RtcEngine.create(getBaseContext(), getString(R.string.agora_app_id), mRtcEventHandler);
-            setChannelProfile();
-            setupVideoConfig();
-            setupLocalVideo();
-            findViewById(R.id.become_viewer).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mRtcEngine.setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
-                    joinChannel();
-                }
-            });
-            findViewById(R.id.become_broadcaster).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mRtcEngine.setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
-                    joinChannel();
-                }
-            });
-        } catch (Exception e) {
-            Log.e(LOG_TAG, Log.getStackTraceString(e));
-            throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
-        }
+        registerStreamEventsHandler(this);
+        setupStreamUI(findViewById(R.id.stream_layout_self), findViewById(R.id.stream_layout));
+        setupVideoStream(StreamType.INCOMING, mUserID);
+        findViewById(R.id.become_viewer).setOnClickListener(v -> {
+            changePlayerStreamRole(PlayerRole.AUDIENCE);
+            joinChannel(mChannelName, mUserID);
+        });
+        findViewById(R.id.become_broadcaster).setOnClickListener(v -> {
+            changePlayerStreamRole(PlayerRole.BROADCASTER);
+            joinChannel(mChannelName, mUserID);
+        });
+    }
+    @Override
+    public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
+        Log.d(LOG_TAG, "Join channel success. User: " + uid);
     }
 
-    private void setupVideoConfig() {
-        mRtcEngine.enableVideo();
-        mRtcEngine.setVideoEncoderConfiguration(new VideoEncoderConfiguration(
-                VideoEncoderConfiguration.VD_480x480,
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
-                VideoEncoderConfiguration.STANDARD_BITRATE,
-                VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT
-        ));
+    @Override
+    public void onUserJoined(int uid, int elapsed) {
+        Log.d(LOG_TAG, "Joined player: " + uid);
     }
 
-    // TODO: убрать?
-    private void setChannelProfile() {
-        mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
-    }
-
-    private void setupLocalVideo() {
-        mRtcEngine.enableVideo();
-        FrameLayout mLocalContainer = findViewById(R.id.stream_layout_self);
-        SurfaceView mLocalView = RtcEngine.CreateRendererView(getBaseContext());
-        mLocalView.setZOrderMediaOverlay(true);
-        mLocalContainer.addView(mLocalView);
-        VideoCanvas localVideoCanvas = new VideoCanvas(mLocalView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
-        mRtcEngine.setupLocalVideo(localVideoCanvas);
-    }
-
-    private void setupRemoteVideo(int uid) {
-        FrameLayout mRemoteContainer = findViewById(R.id.stream_layout);
-        SurfaceView mRemoteView;
-
-        mRemoteView = RtcEngine.CreateRendererView(getBaseContext());
-        mRemoteContainer.addView(mRemoteView);
-        // Set the remote video view.
-        mRtcEngine.setupRemoteVideo(new VideoCanvas(mRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
-
-    }
-
-    private void joinChannel() {
-        mRtcEngine.joinChannel(null, "test", null, 0);
+    @Override
+    public void onRemoteVideoStats(IRtcEngineEventHandler.RemoteVideoStats stats) {
+        Log.d(LOG_TAG, "Remote video stats. User: " + stats.uid);
+        setupVideoStream(StreamType.OUTCOMING, stats.uid);
     }
 }
