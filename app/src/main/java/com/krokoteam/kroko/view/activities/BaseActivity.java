@@ -1,4 +1,4 @@
-package com.krokoteam.kroko.view;
+package com.krokoteam.kroko.view.activities;
 
 import android.os.Bundle;
 

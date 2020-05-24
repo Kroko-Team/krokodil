@@ -1,5 +1,6 @@
 package com.krokoteam.kroko.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +36,19 @@ public class ProfileSettingsFragment extends Fragment {
                 case R.id.home_icon_profile_settings_image_view:
                     mOpenHomeScreenFragmentRouter.openHomeScreenFragment();
                     break;
-                case R.id.horse_icon_home_screen_image_view:
+                case R.id.horse_icon_profile_settings_image_view:
                     mOpenCreateLobbyFragmentRouter.openCreateLobbyFragment();
                     break;
             }
         }
     };
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mOpenHomeScreenFragmentRouter = (OpenHomeScreenFragmentRouter) context;
+        mOpenCreateLobbyFragmentRouter = (OpenCreateLobbyFragmentRouter) context;
+    }
 
     @Nullable
     @Override
@@ -52,8 +60,4 @@ public class ProfileSettingsFragment extends Fragment {
         return mProfileSettingsBinding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 }

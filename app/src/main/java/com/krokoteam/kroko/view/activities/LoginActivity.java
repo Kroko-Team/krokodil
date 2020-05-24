@@ -1,4 +1,4 @@
-package com.krokoteam.kroko.view;
+package com.krokoteam.kroko.view.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.krokoteam.kroko.R;
 import com.krokoteam.kroko.databinding.ActivityLoginBinding;
+import com.krokoteam.kroko.view.MainActivity;
 
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener {

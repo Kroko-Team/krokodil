@@ -2,8 +2,7 @@ package com.krokoteam.kroko.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import com.krokoteam.kroko.data.FirestoreCallback;
-import com.krokoteam.kroko.data.LobbyDatabase;
+
 import com.krokoteam.kroko.data.model.Lobby;
 
 import java.util.List;
