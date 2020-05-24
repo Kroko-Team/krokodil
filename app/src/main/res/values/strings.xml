@@ -14,4 +14,12 @@
     <string name="hint_password">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="create_account">Create Account</string>
+    <string name="profile">Профиль</string>
+    <string name="games_played">Игр сыграно</string>
+    <string name="wins">Побед</string>
+    <string name="loses">Поражений</string>
+    <string name="points_counter">Очков</string>
+    <string name="added">added</string>
+    <string name="modified">modified</string>
+    <string name="removed">removed</string>
 </resources>
