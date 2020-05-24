@@ -25,7 +25,7 @@ public class LobbyAdapter extends RecyclerView.Adapter<LobbyHolder> {
     private final List<Lobby> mLobbyList;
     private Context mContext;
 
-    public LobbyAdapter(List<Lobby> lobbyList, Context context){
+    LobbyAdapter(List<Lobby> lobbyList, Context context){
         mLobbyList = lobbyList;
         mContext = context;
     }

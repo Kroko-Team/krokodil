@@ -3,11 +3,14 @@ package com.krokoteam.kroko.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 
 import com.krokoteam.kroko.R;
 
 public class MainActivity extends AppCompatActivity
         implements OpenProfileFragmentRouter, OpenCreateLobbyFragmentRouter, OpenHomeScreenFragmentRouter {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +20,22 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.rootMainActivity, HomeScreenFragment.newInstance())
-                    .addToBackStack("HOME_SCREEN_FRAGMENT")
                     .commit();
         }
+
+//        HomeScreenFragment.newInstance().getView().setOnKeyListener( new View.OnKeyListener()
+//        {
+//            @Override
+//            public boolean onKey( View v, int keyCode, KeyEvent event )
+//            {
+//                if( keyCode == KeyEvent.KEYCODE_BACK )
+//                {
+//                    finish();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        } );
     }
 
     @Override
@@ -42,10 +58,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void openHomeScreenFragment() {
         getSupportFragmentManager()
-                .popBackStackImmediate("HOME_SCREEN_FRAGMENT", 0);
-//                .beginTransaction()
-//                .replace(R.id.rootMainActivity, HomeScreenFragment.newInstance())
-//                .addToBackStack(null)
-//                .commit();
+                .beginTransaction()
+                .replace(R.id.rootMainActivity, HomeScreenFragment.newInstance())
+                .commit();
     }
 }

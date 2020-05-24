@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data class="ProfileSettingsBinding">
 
@@ -12,13 +13,200 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
 
-        <TextView
-            android:id="@+id/text_view_profile_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="36dp"
+                android:text="@string/profile"
+                android:textColor="@color/colorBlack"
+                android:textSize="36sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/player_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                tools:text="barishpol" />
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_mode_edit_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/player_name"
+                app:layout_constraintStart_toEndOf="@+id/player_name"
+                app:layout_constraintTop_toTopOf="@+id/player_name"
+                app:layout_constraintVertical_bias="0.5" />
+
+
+            <ImageView
+                android:id="@+id/user_photo"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_marginTop="16dp"
+                android:src="@mipmap/igor"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/player_name" />
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_mode_edit_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/user_photo"
+                app:layout_constraintStart_toEndOf="@+id/user_photo"
+                app:layout_constraintTop_toTopOf="@+id/user_photo"
+                app:layout_constraintVertical_bias="0.5" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/games_counter_card_view"
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="32dp"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/user_photo">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_horse"
+                    android:tint="@color/colorGrayTit" />
+
+                <TextView
+                    android:id="@+id/game_counter"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="32sp"
+                    tools:ignore="RtlHardcoded"
+                    tools:text="50" />
+
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="46dp"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="end|bottom"
+                    android:text="@string/games_played" />
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintStart_toEndOf="@+id/games_counter_card_view"
+                app:layout_constraintTop_toBottomOf="@+id/user_photo">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_horse"
+                    android:tint="@color/colorGrayTit" />
+
+                <TextView
+                    android:id="@+id/wins_counter"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="32sp"
+                    tools:ignore="RtlHardcoded"
+                    tools:text="50" />
+
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="46dp"
+                    android:layout_gravity="end|bottom"
+                    android:gravity="center_horizontal"
+                    android:text="@string/wins" />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/games_counter_card_view">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_horse"
+                    android:tint="@color/colorGrayTit" />
+
+                <TextView
+                    android:id="@+id/loses_counter"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="32sp"
+                    tools:ignore="RtlHardcoded"
+                    tools:text="50" />
+
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="46dp"
+                    android:layout_gravity="end|bottom"
+                    android:gravity="center_horizontal"
+                    android:text="@string/loses" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintStart_toStartOf="@+id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/games_counter_card_view">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_star_yellow_24dp" />
+
+                <TextView
+                    android:id="@+id/points_counter"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="32sp"
+                    tools:ignore="RtlHardcoded"
+                    tools:text="50" />
+
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="46dp"
+                    android:layout_gravity="end|bottom"
+                    android:gravity="center_horizontal"
+                    android:text="@string/points_counter" />
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -46,27 +234,27 @@
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="@{(view) -> onProfileClick.onFragmentIconClick(view)}"
                 android:src="@drawable/ic_home"
                 android:tint="@color/colorGrayTit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/horse_icon_profile_settings_image_view"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/user_profile_profile_settings_image_view"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{(view) -> onProfileClick.onFragmentIconClick(view)}"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/horse_icon_profile_settings_image_view"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="match_parent"
+                android:onClick="@{(view) -> onProfileClick.onFragmentIconClick(view)}"
                 android:src="@drawable/ic_horse"
                 android:tint="@color/colorGrayTit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/home_icon_profile_settings_image_view"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{(view) -> onProfileClick.onFragmentIconClick(view)}"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
