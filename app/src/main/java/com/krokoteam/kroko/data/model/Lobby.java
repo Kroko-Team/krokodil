@@ -12,16 +12,12 @@ import java.util.Map;
 public class Lobby  {
     private static final String USER_NAME_TAG = "user_name";
 
-    private String mGameName;
-    private String mHostUserId;
-    private String mHostUserName;
-    private String mImageUrl;
+    private String mGameName, mHostUserId, mHostUserName, mImageUrl, mRoomId, mSecretWord;
+    private int mGameStatus;
     private ArrayList<Player>  mPlayers;
-    private String mRoomId;
-    private String mSecretWord;
 
     public Lobby(String gameName, String hostUserId, String hostUserName, String imageUrl,
-                 ArrayList<Player> playerArray, String roomId, String secretWord) {
+                 ArrayList<Player> playerArray, String roomId, String secretWord, int gameStatus) {
         mGameName = gameName;
         mHostUserId = hostUserId;
         mHostUserName = hostUserName;
@@ -29,6 +25,7 @@ public class Lobby  {
         mPlayers = playerArray;
         mRoomId = roomId;
         mSecretWord = secretWord;
+        mGameStatus = gameStatus;
     }
 
     public Lobby() {}
@@ -53,11 +50,36 @@ public class Lobby  {
         }
     }
 
+    public Player getPlayerByUserId(String id) {
+        for (Player player : mPlayers) {
+            if (player.getUserId() == id)
+                return player;
+        }
+        return null;
+    }
+
     public String getImageUrl() {
         return mImageUrl;
     }
 
     public String getRoomId() {
         return mRoomId;
+    }
+
+    public GameStatus getCurrentGameStatement() {
+        switch (mGameStatus) {
+            case 0:
+                return GameStatus.PREPARE;
+            case 1:
+                return GameStatus.GAME;
+            default:
+                return GameStatus.END;
+        }
+    }
+
+    public enum GameStatus {
+        PREPARE,
+        GAME,
+        END
     }
 }

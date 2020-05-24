@@ -46,7 +46,8 @@ public class LobbyListLiveData extends LiveData<Operation> implements EventListe
                                 GAME_NAME_TAG = "mGameName",
                                 IMAGE_URL_TAG = "mImageUrl",
                                 ROOM_ID_TAG = "mRoomId",
-                                SECRET_WORD_TAG = "mSecretWord";
+                                SECRET_WORD_TAG = "mSecretWord",
+                                GAME_STATUS_TAG = "mGameStatus";
 
     public LobbyListLiveData(Query query, OnLastVisibleLobbyCallback onLastVisibleLobbyCallback, OnLastLobbyReachedCallback onLastLobbyReachedCallback) {
         this.query = query;
@@ -89,7 +90,8 @@ public class LobbyListLiveData extends LiveData<Operation> implements EventListe
                     lobbyInfo.getString(IMAGE_URL_TAG),
                     players,
                     lobbyInfo.getString(ROOM_ID_TAG),
-                    lobbyInfo.getString(SECRET_WORD_TAG)
+                    lobbyInfo.getString(SECRET_WORD_TAG),
+                    Integer.parseInt(lobbyInfo.getString(GAME_STATUS_TAG))
             );
             switch (documentChange.getType()) {
                 case ADDED:

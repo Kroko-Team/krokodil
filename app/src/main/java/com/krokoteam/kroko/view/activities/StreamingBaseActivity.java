@@ -1,13 +1,13 @@
-package com.krokoteam.kroko.view;
+package com.krokoteam.kroko.view.activities;
 
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.krokoteam.kroko.CrocoApp;
+import com.krokoteam.kroko.view.IStreamEventsHandler;
+import com.krokoteam.kroko.view.activities.BaseActivity;
 
 import io.agora.rtc.Constants;
 import io.agora.rtc.RtcEngine;
@@ -18,7 +18,7 @@ public abstract class StreamingBaseActivity extends BaseActivity {
 
     private FrameLayout mLocalContainer, mRemoteContainer;
     protected String mChannelName;
-    protected int mUserID;
+    protected int mPlayerID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
