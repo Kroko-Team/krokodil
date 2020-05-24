@@ -1,5 +1,7 @@
 package com.krokoteam.kroko.data.model;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
@@ -66,49 +68,46 @@ public class LobbyListLiveData extends LiveData<Operation> implements EventListe
     public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
         if (e != null) return;
         for (DocumentChange documentChange : querySnapshot.getDocumentChanges()) {
+            QueryDocumentSnapshot lobbyInfo = documentChange.getDocument();
+            List<HashMap<String, Object>> playersData =
+                    (List<HashMap<String, Object>>) lobbyInfo.get(PLAYERS_TAG);
+            ArrayList<Player> players = new ArrayList<>();
+            for (HashMap<String, Object> player : playersData) {
+                Player pojoPlayer = new Player(
+                        Boolean.parseBoolean(player.get(IS_BROADCASTER_TAG).toString()),
+                        Boolean.parseBoolean(player.get(IS_WINNER_TAG).toString()),
+                        Integer.parseInt(player.get(PLAYER_SCORE_TAG).toString()),
+                        player.get(PLAYER_ID_TAG).toString(),
+                        player.get(PLAYER_NAME_TAG).toString()
+                );
+                players.add(pojoPlayer);
+            }
+            Lobby lobby = new Lobby(
+                    lobbyInfo.getString(GAME_HOST_NAME_TAG),
+                    lobbyInfo.getString(GAME_HOST_USER_ID_TAG),
+                    lobbyInfo.getString(GAME_NAME_TAG),
+                    lobbyInfo.getString(IMAGE_URL_TAG),
+                    players,
+                    lobbyInfo.getString(ROOM_ID_TAG),
+                    lobbyInfo.getString(SECRET_WORD_TAG)
+            );
             switch (documentChange.getType()) {
                 case ADDED:
-                    // Lobby addedLobby = documentChange.getDocument().toObject(Lobby.class);
-                    QueryDocumentSnapshot lobbyInfo = documentChange.getDocument();
-                    List<HashMap<String, String>> playersData =
-                            (List<HashMap<String, String>>) lobbyInfo.get(PLAYERS_TAG);
-                    ArrayList<Player> players = new ArrayList<>();
-                    for (HashMap<String, String> player : playersData) {
-                        Player pojoPlayer = new Player(
-                                Boolean.parseBoolean(player.get(IS_BROADCASTER_TAG)),
-                                Boolean.parseBoolean(player.get(IS_WINNER_TAG)),
-                                Integer.parseInt(player.get(PLAYER_SCORE_TAG)),
-                                player.get(PLAYER_ID_TAG),
-                                player.get(PLAYER_NAME_TAG)
-                        );
-                        players.add(pojoPlayer);
-                    }
-                    Lobby lobby = new Lobby(
-                            lobbyInfo.getString(GAME_HOST_NAME_TAG),
-                            lobbyInfo.getString(GAME_HOST_USER_ID_TAG),
-                            lobbyInfo.getString(GAME_NAME_TAG),
-                            lobbyInfo.getString(IMAGE_URL_TAG),
-                            players,
-                            lobbyInfo.getString(ROOM_ID_TAG),
-                            lobbyInfo.getString(SECRET_WORD_TAG)
-                    );
                     Operation addOperation = new Operation(lobby, R.string.added);
                     setValue(addOperation);
                     break;
 
                 case MODIFIED:
-                    Lobby modifiedLobby = documentChange.getDocument().toObject(Lobby.class);
-                    Operation modifyOperation = new Operation(modifiedLobby, R.string.modified);
+                    Operation modifyOperation = new Operation(lobby, R.string.modified);
                     setValue(modifyOperation);
                     break;
 
                 case REMOVED:
-                    Lobby removedLobby = documentChange.getDocument().toObject(Lobby.class);
-                    Operation removeOperation = new Operation(removedLobby, R.string.removed);
+                    Operation removeOperation = new Operation(lobby, R.string.removed);
                     setValue(removeOperation);
+                    break;
             }
         }
-
 
         int querySnapshotSize = querySnapshot.size();
         if (querySnapshotSize < LIMIT) {
