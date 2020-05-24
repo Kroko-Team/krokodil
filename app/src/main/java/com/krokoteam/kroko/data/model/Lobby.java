@@ -2,6 +2,7 @@ package com.krokoteam.kroko.data.model;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,13 +10,13 @@ import java.util.Map;
  */
 @SuppressWarnings("WeakerAcess")
 public class Lobby  {
-
+    private static final String USER_NAME_TAG = "user_name";
 
     private String mGameName;
     private String mHostUserId;
     private String mHostUserName;
     private String mImageUrl;
-    private ArrayList<Player> mPlayerArray;
+    private ArrayList<Player>  mPlayers;
     private String mRoomId;
     private String mSecretWord;
 
@@ -25,7 +26,7 @@ public class Lobby  {
         mHostUserId = hostUserId;
         mHostUserName = hostUserName;
         mImageUrl = imageUrl;
-        mPlayerArray = playerArray;
+        mPlayers = playerArray;
         mRoomId = roomId;
         mSecretWord = secretWord;
     }
@@ -38,14 +39,18 @@ public class Lobby  {
 
     public String getPlayerNames() {
         StringBuilder playerNames = new StringBuilder();
-        for (Player player: mPlayerArray){
+        for (Player player: mPlayers){
             playerNames.append(player.getUserName());
         }
         return playerNames.toString();
     }
 
     public String getPlayersQuantity(){
-        return String.valueOf(mPlayerArray.size());
+        if (mPlayers != null) {
+            return String.valueOf(mPlayers.size());
+        } else {
+            return "null";
+        }
     }
 
     public String getImageUrl() {
