@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="CreateLobbyBinding">
@@ -13,6 +14,45 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lobby_creation_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textSize="40sp"
+                android:text="@string/create_lobby"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/lobby_name_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:hint="@string/enter_lobby_name"
+                app:layout_constraintStart_toStartOf="@+id/lobby_creation_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/lobby_creation_text_view" />
+
+            <Button
+                android:id="@+id/create_lobby_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/colorPurple"
+                android:textColor="@color/colorWhite"
+                android:text="@string/create"
+                app:layout_constraintEnd_toEndOf="@+id/lobby_name_edit_text"
+                app:layout_constraintTop_toBottomOf="@+id/lobby_name_edit_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
