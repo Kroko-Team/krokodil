@@ -10,7 +10,6 @@ import com.bumptech.glide.request.RequestOptions;
  */
 public class BindingAdapters {
 
-
     @BindingAdapter("bind:imageUrl")
     public static void loadImage(ImageView imageView, String imageUrl) {
         Glide.with(imageView)
