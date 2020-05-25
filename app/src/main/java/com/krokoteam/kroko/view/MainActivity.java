@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.krokoteam.kroko.R;
 import com.krokoteam.kroko.data.model.Lobby;
+import com.krokoteam.kroko.data.model.Player;
 import com.krokoteam.kroko.view.activities.GameActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -54,10 +55,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void openGameActivity(Lobby lobby) {
+        int value = -1;
+        for (Player player : lobby.getPlayers()) {
+            if (Integer.parseInt(player.getUserId()) >= value)
+                value = Integer.parseInt(player.getUserId());
+        }
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("channel_name", "dfhsldkjfh");
         intent.putExtra("user_hash", "asdfhlkajsd");
-        intent.putExtra("player_id", 0);
+        intent.putExtra("player_id", value + 1);
         startActivity(intent);
     }
 }
