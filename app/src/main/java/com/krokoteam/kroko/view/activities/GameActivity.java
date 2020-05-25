@@ -13,11 +13,16 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import android.os.Bundle;
 
 import com.krokoteam.kroko.R;
+import com.krokoteam.kroko.data.model.ChatMessage;
 import com.krokoteam.kroko.data.model.Lobby;
 import com.krokoteam.kroko.data.model.Operation;
 import com.krokoteam.kroko.data.model.Player;
+import com.krokoteam.kroko.data.repository.ChatRepository;
 import com.krokoteam.kroko.data.repository.FirestoreLobbyListRepository;
+import com.krokoteam.kroko.view.ChatAdapter;
 import com.krokoteam.kroko.view.IStreamEventsHandler;
+
+import java.util.List;
 
 public class GameActivity extends StreamingBaseActivity implements IStreamEventsHandler {
 
@@ -33,6 +38,7 @@ public class GameActivity extends StreamingBaseActivity implements IStreamEvents
     };
 
     private String mUserID;
+    private ChatAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,9 @@ public class GameActivity extends StreamingBaseActivity implements IStreamEvents
         mPlayerID = args.getInt(PLAYER_ID);
         mUserID = args.getString(USER_HASH);
         mChannelName = args.getString(CHANNEL_NAME);
+
+        ChatRepository.getInstance().createChannel(mChannelName);
+        ChatRepository.getInstance().setupChatRepository(mChannelName);
     }
 
     private void setupLobbyUpdateDataHandler() {
@@ -64,6 +73,13 @@ public class GameActivity extends StreamingBaseActivity implements IStreamEvents
                 updateGameData(operation.mLobby);
             }
         });
+//        ChatRepository.getInstance().getChatMessagesLiveData().observe(this,
+//                new Observer<List<ChatMessage>>() {
+//                    @Override
+//                    public void onChanged(List<ChatMessage> chatMessages) {
+//                    }
+//                }
+//        );
     }
 
     private void updateGameData(Lobby lobby) {

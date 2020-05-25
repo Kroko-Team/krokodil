@@ -23,7 +23,6 @@
             android:layout_width="160dp"
             android:layout_height="200dp"
             android:layout_alignParentRight="true"
-            android:layout_above="@+id/stream_control_buttons"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:background="@android:color/holo_blue_bright" />

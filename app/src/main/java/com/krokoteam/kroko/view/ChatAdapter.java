@@ -10,11 +10,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krokoteam.kroko.R;
-import com.krokoteam.kroko.view.activities.ChatMessage;
+import com.krokoteam.kroko.data.model.ChatMessage;
 
 import java.util.List;
 
-class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
     private List<ChatMessage> messages;
@@ -33,9 +33,9 @@ class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ChatAdapter.ViewHolder holder, int position) {
         ChatMessage message = messages.get(position);
-        holder.imageView.setImageResource(message.getImage());
-        holder.nameView.setText(message.getName());
-        holder.textView.setText(message.getText());
+        // holder.imageView.setImageResource(message.getmImageUrl());
+        holder.nameView.setText(message.getmSenderID());
+        holder.textView.setText(message.getmMessage());
     }
 
     @Override
@@ -44,11 +44,11 @@ class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        final ImageView imageView;
+        // final ImageView imageView;
         final TextView nameView, textView;
         ViewHolder(View view){
             super(view);
-            imageView = (ImageView)view.findViewById(R.id.image);
+            // imageView = (ImageView)view.findViewById(R.id.image);
             nameView = (TextView) view.findViewById(R.id.chat_name);
             textView = (TextView) view.findViewById(R.id.chat_text);
         }
