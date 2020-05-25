@@ -9,6 +9,10 @@
             name="lobby"
             type="com.krokoteam.kroko.data.model.Lobby" />
 
+        <variable
+            name="OnEnterLobbyClickListener"
+            type="com.krokoteam.kroko.view.OnEnterLobbyClickListener" />
+
     </data>
 
 
@@ -59,6 +63,7 @@
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/colorPurple"
             android:text="@string/enter_lobby"
+            android:onClick="@{() -> OnEnterLobbyClickListener.onLobbyButtonClicked(lobby)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/quantity_of_participants_image_recycler_view"
             app:layout_constraintTop_toTopOf="parent" />

@@ -25,6 +25,7 @@ public class LobbyAdapter extends RecyclerView.Adapter<LobbyHolder> {
     private final List<Lobby> mLobbyList;
     private Context mContext;
 
+
     LobbyAdapter(List<Lobby> lobbyList, Context context){
         mLobbyList = lobbyList;
         mContext = context;
@@ -38,7 +39,8 @@ public class LobbyAdapter extends RecyclerView.Adapter<LobbyHolder> {
                 LayoutInflater.from(mContext),
                 R.layout.lobby_list_item, parent, false);
 
-        return new LobbyHolder(binding);
+
+        return new LobbyHolder(binding, mContext);
     }
 
     @Override

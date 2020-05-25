@@ -2,16 +2,17 @@ package com.krokoteam.kroko.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
 
 import com.krokoteam.kroko.R;
+import com.krokoteam.kroko.data.model.Lobby;
 import com.krokoteam.kroko.view.activities.GameActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements OpenProfileFragmentRouter, OpenCreateLobbyFragmentRouter, OpenHomeScreenFragmentRouter {
+        implements OpenProfileFragmentRouter, OpenCreateLobbyFragmentRouter, OpenHomeScreenFragmentRouter,
+        OpenGameActivityRouter {
 
 
     @Override
@@ -49,5 +50,14 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.rootMainActivity, HomeScreenFragment.newInstance())
                 .commit();
+    }
+
+    @Override
+    public void openGameActivity(Lobby lobby) {
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("channel_name", "dfhsldkjfh");
+        intent.putExtra("user_hash", "asdfhlkajsd");
+        intent.putExtra("player_id", 0);
+        startActivity(intent);
     }
 }
