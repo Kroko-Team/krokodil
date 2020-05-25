@@ -27,26 +27,35 @@
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:background="@android:color/holo_blue_bright" />
-
         <LinearLayout
-            android:id="@+id/stream_control_buttons"
-            android:weightSum="2"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/become_broadcaster"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stream_chat"
+                app:layoutManager="LinearLayoutManager"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"/>
+            <LinearLayout
+                android:id="@+id/stream_control_buttons"
+                android:weightSum="2"
+                android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:text="Стать ведущим"/>
-            <Button
-                android:id="@+id/become_viewer"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:text="Стать зрителем"/>
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/become_broadcaster"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:text="Стать ведущим"/>
+                <Button
+                    android:id="@+id/become_viewer"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:text="Стать зрителем"/>
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
