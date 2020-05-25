@@ -1,6 +1,7 @@
 package com.krokoteam.kroko.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.krokoteam.kroko.utils.BindingAdapters;
 import com.krokoteam.kroko.utils.BitmapUtils;
 
 import com.krokoteam.kroko.R;
+import com.krokoteam.kroko.view.activities.GameActivity;
 import com.krokoteam.kroko.viewmodel.HomeScreenViewModel;
 import com.krokoteam.kroko.viewmodel.LobbyListViewModel;
 
@@ -109,6 +111,17 @@ public class HomeScreenFragment extends Fragment {
         ImageView mProfileImageHomeScreen = view.findViewById(R.id.profile_image_home_screen_image_view);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.igor);
         mProfileImageHomeScreen.setImageDrawable(mBitmapUtils.createRoundedBitmapDrawableWithBorder(bitmap, getResources()));
+
+        view.findViewById(R.id.find_table_home_screen_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), GameActivity.class);
+                intent.putExtra("channel_name", "dfhsldkjfh");
+                intent.putExtra("user_hash", "asdfhlkajsd");
+                intent.putExtra("player_id", 0);
+                startActivity(intent);
+            }
+        });
     }
 
 

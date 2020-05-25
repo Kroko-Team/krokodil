@@ -1,6 +1,8 @@
 package com.krokoteam.kroko.data.model;
 
 
+import com.google.firebase.database.PropertyName;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,28 +13,24 @@ import java.util.Map;
 @SuppressWarnings("WeakerAcess")
 public class Lobby  {
     private static final String USER_NAME_TAG = "user_name";
-
-    private String mGameName, mHostUserId, mHostUserName, mImageUrl, mRoomId, mSecretWord;
+    private String mRoomId, mSecretWord, mImageUrl, mHostUserName, mHostUserId, mGameName;
     private int mGameStatus;
-    private ArrayList<Player>  mPlayers;
 
-    public Lobby(String gameName, String hostUserId, String hostUserName, String imageUrl,
-                 ArrayList<Player> playerArray, String roomId, String secretWord, int gameStatus) {
-        mGameName = gameName;
-        mHostUserId = hostUserId;
-        mHostUserName = hostUserName;
-        mImageUrl = imageUrl;
-        mPlayers = playerArray;
-        mRoomId = roomId;
-        mSecretWord = secretWord;
-        mGameStatus = gameStatus;
+    private ArrayList<Player> mPlayers;
+
+    public Lobby(String mGameName, String mHostUserId, String mHostUserName, String mImageUrl,
+                 ArrayList<Player> mPlayers, String mRoomId, String mSecretWord, int mGameStatus) {
+        this.mGameName = mGameName;
+        this.mHostUserId = mHostUserId;
+        this.mHostUserName = mHostUserName;
+        this.mImageUrl = mImageUrl;
+        this.mPlayers = mPlayers;
+        this.mRoomId = mRoomId;
+        this.mSecretWord = mSecretWord;
+        this.mGameStatus = mGameStatus;
     }
 
     public Lobby() {}
-
-    public String getGameName() {
-        return mGameName;
-    }
 
     public String getPlayerNames() {
         StringBuilder playerNames = new StringBuilder();
@@ -50,21 +48,54 @@ public class Lobby  {
         }
     }
 
-    public Player getPlayerByUserId(String id) {
+    public Player getPlayerByHash(String id) {
         for (Player player : mPlayers) {
-            if (player.getUserId() == id)
+            if (player.getUserHash().equals(id))
                 return player;
         }
         return null;
     }
 
+    @PropertyName("mGameName")
+    public String getGameName() {
+        return mGameName;
+    }
+
+    @PropertyName("mImageUrl")
     public String getImageUrl() {
         return mImageUrl;
     }
 
+    @PropertyName("mSecretWord")
+    public String getSecretWord() {
+        return mSecretWord;
+    }
+
+    @PropertyName("mRoomId")
     public String getRoomId() {
         return mRoomId;
     }
+
+    @PropertyName("mHostUserId")
+    public String getHostUserId() {
+        return mHostUserId;
+    }
+
+    @PropertyName("mHostUserName")
+    public String getHostUserName() {
+        return mHostUserName;
+    }
+
+    @PropertyName("mGameStatus")
+    public int getGameStatus() {
+        return mGameStatus;
+    }
+
+    @PropertyName("mPlayers")
+    public ArrayList<Player> getPlayers() {
+        return mPlayers;
+    }
+
 
     public GameStatus getCurrentGameStatement() {
         switch (mGameStatus) {
