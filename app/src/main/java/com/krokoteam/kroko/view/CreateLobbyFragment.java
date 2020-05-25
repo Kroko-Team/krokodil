@@ -13,13 +13,18 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.krokoteam.kroko.R;
 import com.krokoteam.kroko.data.model.Lobby;
 import com.krokoteam.kroko.data.model.Player;
+import com.krokoteam.kroko.data.repository.FirestoreLobbyListRepository;
 import com.krokoteam.kroko.databinding.CreateLobbyBinding;
+import com.krokoteam.kroko.utils.Utilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Syelkonya on 05.04.2020.
@@ -78,33 +83,28 @@ public class CreateLobbyFragment extends Fragment {
         mButtonCreateLobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Lobby lobby = new Lobby(
-                        mEditTextCreateLobbyName.getText().toString(),
-                        "hostUserId",
-                        "hostUserName",
-                        "https://sun9-58.userapi.com/c850536/v850536449/f7a49/thoil9Jlw34.jpg",
-                        new ArrayList<Player>(),
-                        getAlphaNumericString(),
-                        "");
+                Map<String, Object> player = new HashMap<>();
+                player.put("mIsBroadcaster", false);
+                player.put("mIsWinner", false);
+                player.put("mScore", 0);
+                player.put("mUserId", 0);
+                player.put("mUserName", "Тит");
+                ArrayList<Map<String, Object>> players = new ArrayList<>();
+                players.add(player);
 
-                db.collection("lobby").document(getAlphaNumericString()).set(lobby);
+                Map<String, Object> docData = new HashMap<>();
+                docData.put("mGameName", mEditTextCreateLobbyName.getText().toString());
+                docData.put("mHostUserId", "aaa");
+                docData.put("mHostUserName", "tetus");
+                docData.put("mImageUrl", "https://sun9-58.userapi.com/c850536/v850536449/f7a49/thoil9Jlw34.jpg");
+                docData.put("mRoomId", Utilities.getInstance().getAlphaNumericString());
+                docData.put("mSecretWord", "ля");
+                docData.put("mGameStatus", 0);
+                docData.put("mPlayers", players);
+
+                FirestoreLobbyListRepository.getInstance().insertLobby(docData);
             }
         });
 
-    }
-
-    private String getAlphaNumericString() {
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        StringBuilder sb = new StringBuilder(15);
-        for (int i = 0; i < 15; i++) {
-
-            int index = (int)(AlphaNumericString.length() * Math.random());
-
-            sb.append(AlphaNumericString.charAt(index));
-        }
-        return sb.toString();
     }
 }

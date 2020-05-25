@@ -12,11 +12,11 @@ public class LobbyListViewModel extends ViewModel {
     private LobbyListRepository mLobbyListRepository = FirestoreLobbyListRepository.getInstance();
 
     public LobbyListLiveData getProductListLiveData() {
-        return mLobbyListRepository.getLobbyListLiveData();
+        return mLobbyListRepository.getLimitedLobbyListLiveData();
     }
 
     public interface LobbyListRepository {
-        LobbyListLiveData getLobbyListLiveData();
+        LobbyListLiveData getLimitedLobbyListLiveData();
     }
 
 }

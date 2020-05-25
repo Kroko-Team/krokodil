@@ -15,6 +15,7 @@ import android.os.Bundle;
 import com.krokoteam.kroko.R;
 import com.krokoteam.kroko.data.model.Lobby;
 import com.krokoteam.kroko.data.model.Operation;
+import com.krokoteam.kroko.data.model.Player;
 import com.krokoteam.kroko.data.repository.FirestoreLobbyListRepository;
 import com.krokoteam.kroko.view.IStreamEventsHandler;
 
@@ -55,7 +56,8 @@ public class GameActivity extends StreamingBaseActivity implements IStreamEvents
     }
 
     private void setupLobbyUpdateDataHandler() {
-        FirestoreLobbyListRepository.getInstance().getLobbyListLiveData().observe(this, new Observer<Operation>() {
+        FirestoreLobbyListRepository.getInstance().getLobbyByRoomLiveData(mChannelName)
+                .observe(this, new Observer<Operation>() {
             @Override
             public void onChanged(Operation operation) {
                 Log.d(LOG_TAG, "Updated data from server: " + operation.mLobby.getGameName());
@@ -68,11 +70,13 @@ public class GameActivity extends StreamingBaseActivity implements IStreamEvents
         if (lobby.getCurrentGameStatement() == Lobby.GameStatus.END) {
             gameCompletion();
         }
-
-        if (lobby.getPlayerByUserId(mUserID).isBroadcaster()) {
+        Player pl = lobby.getPlayerByHash(mUserID);
+        if (lobby.getPlayerByHash(mUserID).isBroadcaster()) {
             changePlayerStreamRole(PlayerRole.BROADCASTER);
+            joinChannel(mChannelName, mPlayerID);
         } else {
             changePlayerStreamRole(PlayerRole.AUDIENCE);
+            joinChannel(mChannelName, mPlayerID);
         }
     }
 

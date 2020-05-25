@@ -47,13 +47,16 @@ public class LobbyListLiveData extends LiveData<Operation> implements EventListe
                                 IMAGE_URL_TAG = "mImageUrl",
                                 ROOM_ID_TAG = "mRoomId",
                                 SECRET_WORD_TAG = "mSecretWord",
-                                GAME_STATUS_TAG = "mGameStatus";
+                                GAME_STATUS_TAG = "mGameStatus",
+                                PLAYER_HASH_TAG = "mPlayerHash";
 
     public LobbyListLiveData(Query query, OnLastVisibleLobbyCallback onLastVisibleLobbyCallback, OnLastLobbyReachedCallback onLastLobbyReachedCallback) {
         this.query = query;
         this.mOnLastVisibleLobbyCallback = onLastVisibleLobbyCallback;
         this.mOnLastLobbyReachedCallback = onLastLobbyReachedCallback;
     }
+
+    public LobbyListLiveData() {}
 
     @Override
     protected void onActive() {
@@ -79,7 +82,8 @@ public class LobbyListLiveData extends LiveData<Operation> implements EventListe
                         Boolean.parseBoolean(player.get(IS_WINNER_TAG).toString()),
                         Integer.parseInt(player.get(PLAYER_SCORE_TAG).toString()),
                         player.get(PLAYER_ID_TAG).toString(),
-                        player.get(PLAYER_NAME_TAG).toString()
+                        player.get(PLAYER_NAME_TAG).toString(),
+                        player.get(PLAYER_HASH_TAG).toString()
                 );
                 players.add(pojoPlayer);
             }
@@ -91,7 +95,7 @@ public class LobbyListLiveData extends LiveData<Operation> implements EventListe
                     players,
                     lobbyInfo.getString(ROOM_ID_TAG),
                     lobbyInfo.getString(SECRET_WORD_TAG),
-                    Integer.parseInt(lobbyInfo.getString(GAME_STATUS_TAG))
+                    lobbyInfo.getLong(GAME_STATUS_TAG).intValue()
             );
             switch (documentChange.getType()) {
                 case ADDED:
